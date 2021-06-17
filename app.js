@@ -20,5 +20,6 @@ const server = http
 
 
 module.exports = {
-  server
+  server,
+  app
 }
