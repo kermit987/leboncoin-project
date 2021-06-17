@@ -1,4 +1,5 @@
 const { app, server } = require('../app.js')
+const { db, closeDatabase } = require('model/db')
 const request = require('supertest')
 
 describe('/POST testing fizz-buzz', () => {

@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
 const router = require('route/')
+const { db } = require('model/db')
 
 const dotenv = require('dotenv').config()
 
