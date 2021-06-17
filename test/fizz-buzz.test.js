@@ -43,4 +43,12 @@ describe('/POST testing fizz-buzz', () => {
   })
 })
 
+describe('GET test getStatic ', () => {
+  test('should get code status 200', async (done) => {
+    await request(app)
+      .get('/getStatistic')
+      .expect(200)
+    done()
+  })
+}) 
 server.close()
