@@ -17,7 +17,6 @@ describe('/POST testing fizz-buzz', () => {
       .send(payload)
       .expect(200)
       .then(response => {
-        console.log('value of response.body ', response.text)
         expect(JSON.parse(response.text)).toStrictEqual(expectResult)
       })
     done()
