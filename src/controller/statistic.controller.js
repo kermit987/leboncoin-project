@@ -8,20 +8,18 @@ const getStatistic = async (req, res) => {
 
 
   const cursor = await statistics.aggregate([
-    {'$group': {
+    {'$group': {      
       _id: "$doc",
       mostUsedRequest: {$sum: 1},
     }},
     { '$sort': {
       'mostUsedRequest': -1
-    }}
+    }},
+    { '$project': { 'doc': '$_id', '_id': 0, 'mostUsedRequest': 1}}
   ])
 
-  await cursor.forEach(doc => {
-    mostUsedRequest.push(doc)
-  })
-
-  res.status(200).send(mostUsedRequest[0])
+  const firstResult = await cursor.toArray();
+  res.status(200).send(firstResult[0])
 }
 
 module.exports = {

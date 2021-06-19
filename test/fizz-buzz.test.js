@@ -1,5 +1,5 @@
 const request = require('supertest')
-const {app } = require('../app')
+const {app, server } = require('../app')
 const { init, client } = require('../src/model/db')
 const config = require('../config/config')
 
@@ -8,11 +8,12 @@ const seed = async (statistic) => {
   // for testing purpose (testing getStatistic endpoint)
 
   const docs = [
-  { doc: "3 4 20 three four" },
-  { doc: "3 4 20 three four" },
-  { doc: "7 8 20 seven eight" },
-  { doc: "7 8 20 seven eight" },
-  { doc: "7 8 20 seven eight" }]
+  { doc: '3 4 20 three four' },
+  { doc: '3 4 20 three four' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' }]
 
   try {
     const payload = await statistic.insertMany(docs)
@@ -71,12 +72,18 @@ describe('/POST testing fizz-buzz', () => {
   })
 })
 
-// describe('GET test getStatic ', () => {
-//   test('should get code status 200', async (done) => {
-//     await request(app)
-//       .get('/getStatistic')
-//       .expect(200)
-//     done()
-//   })
-// }) 
+describe('GET test getStatic ', () => {
+  test('should get code status 200', async (done) => {
+    await request(app)
+      .get('/getStatistic')
+      .expect(200)
+      .then(response => {
+        const result = JSON.parse(response.text)
+        expect(result.doc).toBe('7 8 20 seven eight')
+        expect(result.mostUsedRequest).toBe(4)
+      })
+    done()
+  })
+})
+
 // server.close()
