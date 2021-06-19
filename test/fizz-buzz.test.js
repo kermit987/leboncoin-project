@@ -3,6 +3,9 @@ const {app, server } = require('../app')
 const { init, client } = require('../src/model/db')
 const config = require('../config/config')
 
+let database;
+let statistic;
+
 const seed = async (statistic) => {
   // seed the collection statistic from test database
   // for testing purpose (testing getStatistic endpoint)
@@ -25,13 +28,24 @@ const seed = async (statistic) => {
 
 beforeAll(async() => {
   await init()
-  const database = client.db(config.db.host)
-  const statistic = database.collection('statistic')
-  await statistic.drop()
-  seed(statistic)
+  database = client.db(config.db.host)
+  statistic = database.collection('statistic')
+  try {
+    await database
+      .listCollections()
+      .toArray()
+      .then(async cols => {
+        if (cols.length)
+          await statistic.drop()
+      })
+    seed(statistic)
+  } catch (e) {
+    throw 'Error while trying to drop database ' + e
+  }
 })
 
 describe('/POST testing fizz-buzz', () => {
+
   test('testing normal behavior', async (done) => {
     const payload = {
       int1: 3,
@@ -51,6 +65,7 @@ describe('/POST testing fizz-buzz', () => {
       })
     done()
   })
+
   test('testing another normal behavior', async (done) => {
     const payload = {
       int1: 5,
@@ -72,8 +87,9 @@ describe('/POST testing fizz-buzz', () => {
   })
 })
 
-describe('GET test getStatic ', () => {
-  test('should get code status 200', async (done) => {
+describe('/GET test getStatic ', () => {
+
+  test('check if we can find the most used request', async (done) => {
     await request(app)
       .get('/getStatistic')
       .expect(200)
@@ -84,6 +100,24 @@ describe('GET test getStatic ', () => {
       })
     done()
   })
+  
+  test('check when the database is empty', async (done) => {
+    try {
+      await statistic.drop()  
+    } catch (e) {
+      throw 'Error while trying to drop database ' + e
+    }
+    await request(app)
+      .get('/getStatistic')
+      .expect(200)
+      .then(async response => {
+        expect(response.text).toBeFalsy()
+      })
+    done()
+  })
 })
 
-// server.close()
+afterAll(() => {
+  server.close()
+  client.close()
+})
