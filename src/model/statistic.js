@@ -3,7 +3,7 @@ const config = require("../../config/config.js")
 
 const { client } = require('./db')
 
-const logRequest = async (request) => {
+const insertLogRequest = async (request) => {
   try {
     const database = client.db(config.db.host)
 
@@ -16,5 +16,5 @@ const logRequest = async (request) => {
 }
 
 module.exports = {
-  logRequest
+  insertLogRequest
 }

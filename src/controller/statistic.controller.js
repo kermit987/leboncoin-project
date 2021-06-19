@@ -2,20 +2,26 @@ const { client } = require('model/db')
 const config = require('../../config/config.js')
 
 const getStatistic = async (req, res) => {
-  // console.log(Statistic.findOne({}))
   const database = client.db(config.db.host)
   const statistics = database.collection('statistics')
+  const mostUsedRequest = []
+
 
   const cursor = await statistics.aggregate([
-    {'$match': { _id : {$exists: true} } },
-
+    {'$group': {
+      _id: "$doc",
+      mostUsedRequest: {$sum: 1},
+    }},
+    { '$sort': {
+      'mostUsedRequest': -1
+    }}
   ])
 
-  const result = await cursor.forEach(doc => {
-    console.log(doc)
+  await cursor.forEach(doc => {
+    mostUsedRequest.push(doc)
   })
 
-  res.status(200).send(result)
+  res.status(200).send(mostUsedRequest[0])
 }
 
 module.exports = {

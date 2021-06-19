@@ -1,11 +1,11 @@
-const { logRequest } = require('model/statistic')
+const { insertLogRequest } = require('model/statistic')
 
 const fizzBuzzController = async (req, res) => {
   const { int1, int2, limit, str1, str2} = req.body
 
   const request = int1.toString() + " " + int2.toString() + " " + limit.toString() + " " + str1.toString() + " " + str2.toString()
 
-  logRequest(request)
+  insertLogRequest(request)
 
   const result = []
   for (i = 1; i <= limit; i++) {

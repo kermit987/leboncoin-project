@@ -1,9 +1,13 @@
 const request = require('supertest')
 const {app, server} = require('../app')
-const { init } = require('../src/model/db')
+const { init, client } = require('../src/model/db')
+const config = require('../config/config')
 
 beforeAll(async() => {
   await init()
+  const database = client.db(config.db.host)
+  const statistics = database.collection('statistics')
+  await statistics.drop()
 })
 
 describe('/POST testing fizz-buzz', () => {
@@ -15,7 +19,6 @@ describe('/POST testing fizz-buzz', () => {
       str1: "three",
       str2: "four"
     }
-    // const expectResult = "3 4 20 three four"
     const expectResult = ['1','2','three','four','5','three','7','four','three','10','11','threefour','13','14','three','four','17','three','19',"four"]
     await request(app)
       .post('/fizz-buzz')
@@ -24,7 +27,6 @@ describe('/POST testing fizz-buzz', () => {
       .expect(200)
       .then(response => {
         expect(JSON.parse(response.text)).toStrictEqual(expectResult)
-        // expect(response.text).toStrictEqual(expectResult)
       })
     done()
   })
