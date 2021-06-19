@@ -3,7 +3,7 @@ const config = require('../../config/config.js')
 
 const getStatistic = async (req, res) => {
   const database = client.db(config.db.host)
-  const statistics = database.collection('statistics')
+  const statistics = database.collection('statistic')
   const mostUsedRequest = []
 
 

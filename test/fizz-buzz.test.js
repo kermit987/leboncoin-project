@@ -1,13 +1,33 @@
 const request = require('supertest')
-const {app, server} = require('../app')
+const {app } = require('../app')
 const { init, client } = require('../src/model/db')
 const config = require('../config/config')
+
+const seed = async (statistic) => {
+  // seed the collection statistic from test database
+  // for testing purpose (testing getStatistic endpoint)
+
+  const docs = [
+  { doc: "3 4 20 three four" },
+  { doc: "3 4 20 three four" },
+  { doc: "7 8 20 seven eight" },
+  { doc: "7 8 20 seven eight" },
+  { doc: "7 8 20 seven eight" }]
+
+  try {
+    const payload = await statistic.insertMany(docs)
+    console.log(`${payload.insertedCount} documents were inserted`)
+  } catch (e) {
+    throw 'Error while trying to insert document ' + e
+  }
+}
 
 beforeAll(async() => {
   await init()
   const database = client.db(config.db.host)
-  const statistics = database.collection('statistics')
-  await statistics.drop()
+  const statistic = database.collection('statistic')
+  await statistic.drop()
+  seed(statistic)
 })
 
 describe('/POST testing fizz-buzz', () => {
