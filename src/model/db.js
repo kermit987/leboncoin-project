@@ -1,28 +1,31 @@
-const mongoose = require('mongoose')
+const { MongoClient } = require('mongodb')
 const config = require("../../config/config.js")
 
 const closeDatabase = done => {
   mongoose.disconnect(done)
 }
 
-console.log('value of config.db.user ', config.db.user)
-console.log('value of config.db.password ', config.db.password)
+const uri = 'mongodb+srv://' + config.db.user + ':' + config.db.password + '@cluster0.4s4z6.mongodb.net/' + config.db.host + '?retryWrites=true&w=majority'
 
-const database = 'mongodb+srv://' + config.db.user + ':' + config.db.password + '@cluster0.qcnye.mongodb.net/' + config.db.host + '?retryWrites=true&w=majority'
+const client = new MongoClient(uri, { useUnifiedTopology: true })
 
-mongoose.connect(database)
+const init = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await client.connect()
+      await client.db(config.db.host).command({ping: 1})
+      console.log('Connected successfully!')
+      resolve()
+    } catch (err) {
+      console.log('Error: failed to connect to database ', err)
+      reject (err)
+    }    
+  })
+}
 
-const db = mongoose.connection
-
-db.on('error', err => {
-  throw new Error('Connection to database failed ', err)
-})
-
-db.once('open', function() {  
-  console.log('Database connected')
-})
 
 module.exports = {
-  db,
+  client,
+  init,
   closeDatabase
 }

@@ -1,5 +1,4 @@
-const { logRequest } = require('model/statisticModel')
-// const express = require('express')
+const { logRequest } = require('model/statistic')
 
 const fizzBuzzController = async (req, res) => {
   const { int1, int2, limit, str1, str2} = req.body
