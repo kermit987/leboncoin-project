@@ -85,6 +85,22 @@ describe('/POST testing fizz-buzz', () => {
       })
     done()
   })
+
+  test('testing when one of the params is missing', async (done) => {
+    const payload = {
+      int1: 5,
+      int2: 6,
+      limit: 30,
+      str1: "five",
+      //str2 is missing
+    }
+    await request(app)
+      .post('/fizz-buzz')
+      .set('Accept', 'application/json')
+      .send(payload)
+      .expect(400)
+    done()
+  })
 })
 
 describe('/GET test getStatic ', () => {
