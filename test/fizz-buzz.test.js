@@ -45,7 +45,6 @@ beforeAll(async() => {
 })
 
 describe('/POST testing fizz-buzz', () => {
-
   test('testing normal behavior', async (done) => {
     const payload = {
       int1: 3,
@@ -104,7 +103,6 @@ describe('/POST testing fizz-buzz', () => {
 })
 
 describe('/GET test getStatic ', () => {
-
   test('check if we can find the most used request', async (done) => {
     await request(app)
       .get('/getStatistic')
@@ -116,7 +114,29 @@ describe('/GET test getStatic ', () => {
       })
     done()
   })
-  
+
+  test('check when two request have bee called an equal number of time', async (done) => {
+    try {
+      database = client.db(config.db.host)
+      statistic = database.collection('statistic')  
+      const payload = await statistic.insertOne({doc: '3 4 20 three four'})
+      console.log(`${payload.insertedCount} documents were inserted`)
+    } catch (e) {
+      throw 'Error while trying to insert document ' + e
+    }
+    const expected = [{ mostUsedRequest: 4, doc: '3 4 20 three four' },  { mostUsedRequest: 4, doc: '7 8 20 seven eight' }]
+    await request(app)
+      .get('/getStatistic')
+      .expect(200)
+      .then(response => {
+        const result = JSON.parse(response.text)
+        expect(result).toEqual(expect.arrayContaining(expected))
+
+      })
+    done()
+
+  })
+
   test('check when the database is empty', async (done) => {
     try {
       await statistic.drop()  
@@ -132,6 +152,16 @@ describe('/GET test getStatic ', () => {
     done()
   })
 })
+
+// describe('arrayContaining', () => {
+//   const expected = ['Alice', 'Bob'];
+//   it('matches even if received contains additional elements', () => {
+//     expect(['Alice', 'Bob', 'Eve']).toEqual(expect.arrayContaining(expected));
+//   });
+//   it('does not match if received does not contain expected elements', () => {
+//     expect(['Bob', 'Eve']).not.toEqual(expect.arrayContaining(expected));
+//   });
+// });
 
 afterAll(() => {
   server.close()

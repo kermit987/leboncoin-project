@@ -17,7 +17,15 @@ const getStatistic = async (req, res) => {
   ])
 
   const mostUsedRequest = await cursor.toArray(); //otherwise your return a string
-  res.status(200).send(mostUsedRequest[0])
+  if (mostUsedRequest[0] !== undefined && mostUsedRequest[1] !== undefined) {
+    if (mostUsedRequest[0].mostUsedRequest === mostUsedRequest[1].mostUsedRequest) {
+      res.status(200).send(mostUsedRequest.splice(0, 2))
+    } else {
+    res.status(200).send(mostUsedRequest[0])
+    }
+  } else {
+    res.status(200).send(mostUsedRequest[0])
+  }
 }
 
 module.exports = {
