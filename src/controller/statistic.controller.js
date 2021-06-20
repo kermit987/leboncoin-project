@@ -1,11 +1,9 @@
 const { client } = require('model/db')
 const config = require('../../config/config.js')
 
-const getStatistic = async (req, res) => {
+const getStatistic = async (req, res) => {  
   const database = client.db(config.db.host)
   const statistics = database.collection('statistic')
-  const mostUsedRequest = []
-
 
   const cursor = await statistics.aggregate([
     {'$group': {      
@@ -18,8 +16,8 @@ const getStatistic = async (req, res) => {
     { '$project': { 'doc': '$_id', '_id': 0, 'mostUsedRequest': 1}}
   ])
 
-  const firstResult = await cursor.toArray();
-  res.status(200).send(firstResult[0])
+  const mostUsedRequest = await cursor.toArray(); //otherwise your return a string
+  res.status(200).send(mostUsedRequest[0])
 }
 
 module.exports = {
