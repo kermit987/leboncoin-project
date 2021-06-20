@@ -5,10 +5,6 @@ const closeDatabase = done => {
   mongoose.disconnect(done)
 }
 
-console.log('value of config.db.user ', config.db.user)
-console.log('value of config.db.password ', config.db.password)
-console.log('value of config.db.host ', config.db.host)
-
 const uri = 'mongodb+srv://' + config.db.user + ':' + config.db.password + '@cluster0.4s4z6.mongodb.net/' + config.db.host + '?retryWrites=true&w=majority'
 
 const client = new MongoClient(uri, { useUnifiedTopology: true })
