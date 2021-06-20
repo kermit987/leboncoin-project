@@ -31,7 +31,7 @@ beforeAll(async() => {
   database = client.db(config.db.host)
   statistic = database.collection('statistic')
   try {
-    await database
+    await database //check if the database exist before dropping it otherwise it may end up getting an "Error: ns not found"
       .listCollections()
       .toArray()
       .then(async cols => {
