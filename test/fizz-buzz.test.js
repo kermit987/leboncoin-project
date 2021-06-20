@@ -1,8 +1,51 @@
-const { app, server } = require('../app.js')
-const { db, closeDatabase } = require('model/db')
 const request = require('supertest')
+const {app, server } = require('../app')
+const { init, client } = require('../src/model/db')
+const config = require('../config/config')
+
+let database;
+let statistic;
+
+const seed = async (statistic) => {
+  // seed the collection statistic from test database
+  // for testing purpose (testing getStatistic endpoint)
+
+  const docs = [
+  { doc: '3 4 20 three four' },
+  { doc: '3 4 20 three four' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' },
+  { doc: '7 8 20 seven eight' }]
+
+  try {
+    const payload = await statistic.insertMany(docs)
+    console.log(`${payload.insertedCount} documents were inserted`)
+  } catch (e) {
+    throw 'Error while trying to insert document ' + e
+  }
+}
+
+beforeAll(async() => {
+  await init()
+  database = client.db(config.db.host)
+  statistic = database.collection('statistic')
+  try {
+    await database //check if the database exist before dropping it otherwise it may end up getting an "Error: ns not found"
+      .listCollections()
+      .toArray()
+      .then(async cols => {
+        if (cols.length)
+          await statistic.drop()
+      })
+    seed(statistic)
+  } catch (e) {
+    throw 'Error while trying to drop database ' + e
+  }
+})
 
 describe('/POST testing fizz-buzz', () => {
+
   test('testing normal behavior', async (done) => {
     const payload = {
       int1: 3,
@@ -22,6 +65,7 @@ describe('/POST testing fizz-buzz', () => {
       })
     done()
   })
+
   test('testing another normal behavior', async (done) => {
     const payload = {
       int1: 5,
@@ -43,12 +87,37 @@ describe('/POST testing fizz-buzz', () => {
   })
 })
 
-describe('GET test getStatic ', () => {
-  test('should get code status 200', async (done) => {
+describe('/GET test getStatic ', () => {
+
+  test('check if we can find the most used request', async (done) => {
     await request(app)
       .get('/getStatistic')
       .expect(200)
+      .then(response => {
+        const result = JSON.parse(response.text)
+        expect(result.doc).toBe('7 8 20 seven eight')
+        expect(result.mostUsedRequest).toBe(4)
+      })
     done()
   })
-}) 
-server.close()
+  
+  test('check when the database is empty', async (done) => {
+    try {
+      await statistic.drop()  
+    } catch (e) {
+      throw 'Error while trying to drop database ' + e
+    }
+    await request(app)
+      .get('/getStatistic')
+      .expect(200)
+      .then(async response => {
+        expect(response.text).toBeFalsy()
+      })
+    done()
+  })
+})
+
+afterAll(() => {
+  server.close()
+  client.close()
+})
