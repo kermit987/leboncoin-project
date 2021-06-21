@@ -7,6 +7,8 @@ orbs:
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@4.1
+  orbs:
+    heroku: cirlceci/heroku@0.0.10
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
@@ -30,7 +32,7 @@ jobs:
       - run:
           name: Run tests
           command: npm test
-
+\
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
@@ -39,5 +41,8 @@ workflows:
   sample:
     jobs:
       - build-and-test
+  heroku_deploy:
+    jobs:
+      - heroku/deploy-via-git
       # For running simple node tests, you could optionally use the node/test job from the orb to replicate and replace the job above in fewer lines.
       # - node/test

@@ -1,6 +1,7 @@
 const request = require('supertest')
-const {app, server } = require('../app')
-const { init, client } = require('../src/model/db')
+// const { a } = require('../app')
+const { server } = require('../server.js')
+const { init, client, closeDatabase } = require('../src/model/db')
 const config = require('../config/config')
 
 let database;
@@ -54,7 +55,7 @@ describe('/POST testing fizz-buzz', () => {
       str2: "four"
     }
     const expectResult = ['1','2','three','four','5','three','7','four','three','10','11','threefour','13','14','three','four','17','three','19',"four"]
-    await request(app)
+     await request(server)
       .post('/fizz-buzz')
       .set('Accept', 'application/json')
       .send(payload)
@@ -74,7 +75,7 @@ describe('/POST testing fizz-buzz', () => {
       str2: "six"
     }
     const expectResult = ['1','2','3','4','five','six','7','8','9','five','11','six','13','14','five','16','17','six','19','five','21','22','23','six','five','26','27','28','29','fivesix']
-    await request(app)
+     await request(server)
       .post('/fizz-buzz')
       .set('Accept', 'application/json')
       .send(payload)
@@ -93,7 +94,7 @@ describe('/POST testing fizz-buzz', () => {
       str1: "five",
       //str2 is missing
     }
-    await request(app)
+    await request(server)
       .post('/fizz-buzz')
       .set('Accept', 'application/json')
       .send(payload)
@@ -104,7 +105,7 @@ describe('/POST testing fizz-buzz', () => {
 
 describe('/GET test getStatic ', () => {
   test('check if we can find the most used request', async (done) => {
-    await request(app)
+     await request(server)
       .get('/getStatistic')
       .expect(200)
       .then(response => {
@@ -125,7 +126,7 @@ describe('/GET test getStatic ', () => {
       throw 'Error while trying to insert document ' + e
     }
     const expected = [{ mostUsedRequest: 4, doc: '3 4 20 three four' },  { mostUsedRequest: 4, doc: '7 8 20 seven eight' }]
-    await request(app)
+     await request(server)
       .get('/getStatistic')
       .expect(200)
       .then(response => {
@@ -143,7 +144,7 @@ describe('/GET test getStatic ', () => {
     } catch (e) {
       throw 'Error while trying to drop database ' + e
     }
-    await request(app)
+    await request(server)
       .get('/getStatistic')
       .expect(200)
       .then(async response => {
@@ -153,7 +154,9 @@ describe('/GET test getStatic ', () => {
   })
 })
 
-afterAll(() => {
-  server.close()
-  client.close()
+afterAll(async () => {
+  // closeDatabase()
+  server.close(() => console.log('server close'))
 })
+
+jest.setTimeout(10000)
