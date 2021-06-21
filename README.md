@@ -2,9 +2,9 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Usage] (#usage)
-* [Authors] (#authors)
-* [Support] (#support)
+* [Usage](#usage)
+* [Authors](#authors)
+* [Support](#support)
 
 ## General info
 This project is a simple fizz-and-buzz project.
