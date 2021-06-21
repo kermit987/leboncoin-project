@@ -2,6 +2,8 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Authors] (#authors)
+* [Support] (#support)
 
 ## General info
 This project is a simple fizz-and-buzz project.
@@ -23,3 +25,10 @@ $ npm run start //for production environment only
 
 ```
 
+## Authors
+
+Steven Loo Fat - Developer 
+
+## Support
+
+mail: steven.loofat@gmail.com
