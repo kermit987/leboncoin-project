@@ -11,7 +11,7 @@ const {
  *    description: Allow users to know what the most frequent request has been
  *    responses:
  *      '200':
- *        description: The most used request (with their params)
+ *        description: The most used request (doc) and how many time it has been hit (mostUsedRequest)
  *        content:
  *          application/json:
  *            schema:
