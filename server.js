@@ -1,6 +1,53 @@
 const { app } = require('./app')
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
 
 const PORT = process.env.PORT || 8080
+
+// const swaggerOptions = {
+//   swaggerDefinition: {
+//     info: {
+//       title: 'Customer API',
+//       description: 'Customer API information',
+//       contact: {
+//         name: 'Amazing Developer'
+//       },
+//       servers: ['http://localhost:8080']
+//     }
+//   },
+//   apis: ['route/*.js']
+// }
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.0.0",
+      title: "Customer API",
+      description: "Customer API Information",
+      contact: {
+        name: "Amazing Developer"
+      },
+      servers: ["http://localhost:8080"]
+    }
+  },
+  // apis: ['./src/route/statistic.route.js']
+  apis: ['./src/route/*.route.js']
+  // apis: ["server.js"]
+};
+
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+/**
+ * @swagger
+ * /customers:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 
 server = app.listen(PORT, () => {
   console.log('App listening on port ', PORT)
