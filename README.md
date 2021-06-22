@@ -50,6 +50,8 @@ $ npm run start //for production environment only
 
 ```
 
+When running on your machine, your can access the swagger documentation at http://localhost:8080/api-docs 
+
 ## Usage
 
 Once the repository clone on your local machine and once the dependencies install, run the above command (show in the Setup section). You will then be able to access it at http://localhost:8080
