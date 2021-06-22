@@ -35,9 +35,16 @@ Project is created with:
 	
 ## Setup
 
-Clone this repository on your machine and run the following command to install all the dependencies:
+Clone this repository on your machine and run the following command:
 
 ```
+$ git clone git@github.com:kermit987/leboncoin-project.git
+```
+
+install all the dependencies
+
+```
+$ cd leboncoin-project
 $ npm install
 ```
 
