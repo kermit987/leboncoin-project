@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=DEVELOPMENT NODE_PATH=src/ nodemon server.js",
     "test": "NODE_ENV=TEST NODE_PATH=src/ jest --coverage --forceExit",
-    "start": "NODE_ENV=PRODUCTION NODE_PATH=src/ nodemon app.js"
+    "start": "NODE_ENV=PRODUCTION NODE_PATH=src/ nodemon server.js"
   },
   "repository": {
     "type": "git",
