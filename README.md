@@ -3,6 +3,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Usage](#usage)
+* [Example](#example)
 * [Authors](#authors)
 * [Support](#support)
 
@@ -64,6 +65,64 @@ When running on your machine, your can access the swagger documentation at http:
 ## Usage
 
 Once the repository clone on your local machine and once the dependencies install, run the above command (show in the Setup section). You will then be able to access it at http://localhost:8080
+
+## example
+
+
+```
+curl -v http://localhost:8080/getSatistic
+```
+
+should return 
+
+```
+{
+    "mostUsedRequest": 18,
+    "doc": "3 4 40 three four"
+}
+```
+
+```
+curl -d "int1=3&int2=4&limit=10&str1=three&str2=four" -X POST http://localhost:8080/getStatistic
+
+```
+should return
+
+```
+[
+    "1",
+    "2",
+    "3",
+    "4",
+    "five",
+    "six",
+    "7",
+    "8",
+    "9",
+    "five",
+    "11",
+    "six",
+    "13",
+    "14",
+    "five",
+    "16",
+    "17",
+    "six",
+    "19",
+    "five",
+    "21",
+    "22",
+    "23",
+    "six",
+    "five",
+    "26",
+    "27",
+    "28",
+    "29",
+    "fivesix"
+]
+```
+
 
 ## Authors
 
