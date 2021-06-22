@@ -14,12 +14,12 @@ The original fizz-buzz consists in writing all numbers from 1 to 100, and just r
 
 leboncoin-project is a web server that will expose a REST API with the following endpoint: 
 
- - **/fizz-buzz/** : 
+ - **fizz-buzz/** : 
     - Method: **POST**
       - Description: Returns a list of strings with numbers from 1 to limit, where: all multiples of int1 are replaced by str1, all multiples of int2 are 			     replaced by str2, all multiples of int1 and int2 are replaced by str1str2.
       - Body: int1, int2, limit, str1, str2
 
- - **/getStatistic/** : 
+ - **getStatistic/** : 
     - Methods: **GET**
     - Description: Return a 200 status code and allow users to know what the most frequent request has been and return the parameters corresponding to the most 		   used request, as well as the number of hits for this request
     - Query Strings: none
