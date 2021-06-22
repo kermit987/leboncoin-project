@@ -156,7 +156,7 @@ describe('/GET test getStatic ', () => {
 
 afterAll(async () => {
   // closeDatabase()
-  server.close(() => console.log('server close'))
+  server.close()
 })
 
 jest.setTimeout(10000)
