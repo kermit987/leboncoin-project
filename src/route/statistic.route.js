@@ -22,7 +22,11 @@ const {
  *                  example: 4
  *                doc:
  *                  type: string
- *                  example: "5 6 30 five six"
+ *                  example: 5 6 30 five six
+ *              examples:
+ *                mostUsedRequest: 12
+ *                doc: 5 6 30 five six
+ *                
  * 
  */
 

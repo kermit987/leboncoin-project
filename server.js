@@ -4,20 +4,6 @@ const swaggerUi = require('swagger-ui-express')
 
 const PORT = process.env.PORT || 8080
 
-// const swaggerOptions = {
-//   swaggerDefinition: {
-//     info: {
-//       title: 'Customer API',
-//       description: 'Customer API information',
-//       contact: {
-//         name: 'Amazing Developer'
-//       },
-//       servers: ['http://localhost:8080']
-//     }
-//   },
-//   apis: ['route/*.js']
-// }
-
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -30,9 +16,7 @@ const swaggerOptions = {
       servers: ["http://localhost:8080"]
     }
   },
-  // apis: ['./src/route/statistic.route.js']
   apis: ['./src/route/*.route.js']
-  // apis: ["server.js"]
 };
 
 
