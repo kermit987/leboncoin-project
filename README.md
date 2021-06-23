@@ -1,8 +1,8 @@
 <!--  PROJECT LOGO -->
 
-<div style="text-align:center">
+<p style="text-align:center">
  <img src="https://github.com/kermit987/leboncoin-project/blob/main/images/logo.png" alt="drawing"/>	
-</div>
+</p>
 
 ## Table of contents
 * [General info](#general-info)
