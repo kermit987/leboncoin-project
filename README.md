@@ -1,6 +1,6 @@
 <!--  PROJECT LOGO -->
 
-![alt text](https://github.com/kermit987/leboncoin-project/images/logo.png)
+![project](https://github.com/kermit987/leboncoin-project/images/logo.png)
 
 ## Table of contents
 * [General info](#general-info)
