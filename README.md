@@ -1,10 +1,6 @@
 <!--  PROJECT LOGO -->
 
-<p align="center">
-	<a href="https://github.com/kermit987/leboncoin-project"
-	   <img src="https://github.com/kermit987/leboncoin-project/images/logo.png"
-	</a>
-</p>
+![alt text](https://github.com/kermit987/leboncoin-project/images/logo.png)
 
 ## Table of contents
 * [General info](#general-info)
