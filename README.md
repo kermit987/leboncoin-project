@@ -1,7 +1,7 @@
 <!--  PROJECT LOGO -->
 
 <div style="text-align:center">
- <img src="https://github.com/kermit987/leboncoin-project/blob/main/images/logo.png" alt="drawing" style="width:50px;"/>	
+ <img src="https://github.com/kermit987/leboncoin-project/blob/main/images/logo.png" alt="drawing" style="max-width:50%;"/>	
 </div>
 
 ## Table of contents
