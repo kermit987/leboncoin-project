@@ -1,4 +1,3 @@
-// const { Statistic } = require('./statisticSchema')
 const config = require("../../config/config.js")
 
 const { client } = require('./db')
