@@ -16,7 +16,10 @@ const getStatistic = async (req, res) => {
     { '$project': { 'doc': '$_id', '_id': 0, 'mostUsedRequest': 1}}
   ])
 
-  const mostUsedRequest = await cursor.toArray(); //otherwise your return a string
+  //otherwise your return a string
+  const mostUsedRequest = await cursor.toArray(); 
+
+  //Check if there is not two request that are called a equal number of time
   if (mostUsedRequest[0] !== undefined && mostUsedRequest[1] !== undefined) {
     if (mostUsedRequest[0].mostUsedRequest === mostUsedRequest[1].mostUsedRequest) {
       res.status(200).send(mostUsedRequest.splice(0, 2))

@@ -7,10 +7,13 @@ const config = require('../config/config')
 let database;
 let statistic;
 
-const seed = async (statistic) => {
-  // seed the collection statistic from test database
-  // for testing purpose (testing getStatistic endpoint)
+/**
+ *  
+ * seed the collection statistic from test database
+ * for testing purpose (testing getStatistic endpoint)
+ */
 
+const seed = async (statistic) => {
   const docs = [
   { doc: '3 4 20 three four' },
   { doc: '3 4 20 three four' },
@@ -32,7 +35,8 @@ beforeAll(async() => {
   database = client.db(config.db.host)
   statistic = database.collection('statistic')
   try {
-    await database //check if the database exist before dropping it otherwise it may end up getting an "Error: ns not found"
+    //check if the database exist before dropping it otherwise it may end up getting an "Error: ns not found"
+    await database
       .listCollections()
       .toArray()
       .then(async cols => {
@@ -155,7 +159,6 @@ describe('/GET test getStatic ', () => {
 })
 
 afterAll(async () => {
-  // closeDatabase()
   server.close()
 })
 
