@@ -1,6 +1,5 @@
 const env = process.env.NODE_ENV
 
-console.log('value of env ', env)
 const DEVELOPMENT = {
   db: {
     host: process.env.DATABASE_DEV,
