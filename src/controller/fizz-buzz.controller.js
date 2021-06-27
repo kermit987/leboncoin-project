@@ -3,7 +3,6 @@ const { insertLogRequest } = require('model/statistic')
 const fizzBuzzController = async (req, res) => {
   const { int1, int2, limit, str1, str2} = req.body
 
-  console.log('inside the fizzBuzzController ', fizzBuzzController)
   if (int1 === undefined || int2 === undefined || limit === undefined || str1 === undefined|| str2 === undefined)
     res.status(400).send('Missing argument')
   else {
